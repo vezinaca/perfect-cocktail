@@ -7,8 +7,6 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import Repo from "./Repo";
-import Container from "react-bootstrap/Container";
-import ListGroup from "react-bootstrap/ListGroup";
 let isSubmitted = false;
 
 function App() {
@@ -16,22 +14,32 @@ function App() {
     //state serait object avec submitted...
 
     const[user, setUser] = useState(''); 
-    //const [repos, setRepos] = useState([]);
+    const [repos, setRepos] = useState([]);
 
-    const [state, setState] = useState({repos: [], isSubmitted: false})
+    //const [state, setState] = useState({repos: [], isSubmitted: false})
 
     let message = null;    
 
   const myFetch = async () => {
-    //isSubmitted = true; 
+    isSubmitted = true; 
     console.log('submitted in fetch: ', isSubmitted);
+
+    // try {
+    //     const res = await axios.get(`https://api.github.com/users/${user}/repos`);
+    //     setRepos(res.data);
+    // } catch (error) {
+    //   console.log(error);
+    // } finally {
+    //   console.log('dans le finally');
+    // }
+
+    //////////////////////////////////
 
     try {
         const res = await fetch(`https://api.github.com/users/${user}/repos`);
         const data = await res.json();
         console.log(data);
-        //setRepos(data);
-        setState({repos: data, isSubmitted: true})
+        setRepos(data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -40,24 +48,32 @@ function App() {
     
   }
 
-  let results;
-  let jumbotronResults;
+  let allRepos;
   
-  console.log('repos lenth: ', state.repos.length);
+  console.log('repos lenth: ', repos.length);
 
-  if (state.repos.length != null){
-        results = state.repos.map(repo => (
+  if (repos.length != null){
+        allRepos = repos.map(repo => (
        <Repo key={repo.id} repo={repo} />
         ))
-        jumbotronResults = (<Jumbotron> {results} </Jumbotron>)
-
     }
     else {
-        results = "Bad username";
-        jumbotronResults = (<Jumbotron style={{color: 'red', backgroundColor: 'pink'}}> {results} </Jumbotron>)
+        allRepos = "nothing found";
     }
 
-  //const jumbotronResults = (<Jumbotron> {results} </Jumbotron>)
+
+
+  const jumboAllRepos = (<Jumbotron> {allRepos} </Jumbotron>)
+
+  console.log("repos length: ", repos.length);
+  if (isSubmitted){
+    message = <Jumbotron> bad user name </Jumbotron>;
+    console.log('submitted: ', isSubmitted);
+  } else {
+    //   message = <Jumbotron> not submitted </Jumbotron>;
+    message = null;
+      console.log('not submitted: ', isSubmitted);
+  }
   
   console.log('stuff before return');
   return (
@@ -75,12 +91,13 @@ function App() {
           </Button>
       </header>
       <main className="App-main">
+          { isSubmitted ? jumboAllRepos : message    }
+        
+        {/* <Jumbotron>
+            {allRepos}
           
-            <ListGroup>
-                { state.isSubmitted ? jumbotronResults : null    }
-            </ListGroup>
-          
-                
+        </Jumbotron> */}
+        
       </main>
     </div>
   );
