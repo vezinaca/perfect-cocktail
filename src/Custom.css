@@ -1,5 +1,5 @@
 .navbar-brand {
-    font-size: 1rem;
+    font-size: 1.6rem;
 }
 .sitename {
     color:white;
@@ -27,6 +27,7 @@ thead {
     font-size: 22px;
     padding-left: 10px;
     color: #29ABE0;
+    text-align: center;
 }
 
 .is-favorite {
@@ -54,4 +55,9 @@ footer p{
 
 li {
     color: white;
+    
+}
+
+.nav-item{
+    padding-top: 5px;
 }

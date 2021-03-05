@@ -66,7 +66,7 @@ class UI {
                               <button type="button" data-id="${drink.idDrink}" class="favorite-btn btn btn-outline-info">
                               +
                               </button>
-                              <img class="card-img-top" src="http://${drink.strDrinkThumb}" alt="${drink.strDrink}">
+                              <img class="card-img-top" src="${drink.strDrinkThumb}" alt="${drink.strDrink}">
 
                               <div class="card-body">
                                    <h2 class="card-title text-center">${drink.strDrink}</h2>
@@ -104,7 +104,7 @@ class UI {
           let ingredients = [];
           for(let i = 1; i < 16; i++) {
                const ingredientMeasure = {};
-               if( drink[`strIngredient${i}`] !== '' ) {
+               if( drink[`strIngredient${i}`] !== null ) {
                     ingredientMeasure.ingredient = drink[`strIngredient${i}`];
                     ingredientMeasure.measure = drink[`strMeasure${i}`];
                     ingredients.push(ingredientMeasure);

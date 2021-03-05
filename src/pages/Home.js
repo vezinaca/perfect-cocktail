@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import "../Boostrap.css";
 
@@ -12,6 +12,8 @@ import Form from "react-bootstrap/Form";
 import FormGroup from "react-bootstrap/FormGroup";
 import Label from "react-bootstrap/FormLabel";
 import FormControl from "react-bootstrap/FormControl";
+import Cocktail from "../components/Cocktail";
+
 
 // Search cocktail by name
 // https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita
@@ -21,23 +23,25 @@ export default function Home(){
 
     const [cocktailName, setCocktailName] = useState([]);
     const [cocktails, setCocktails] = useState([]);
-
+    
      async function fetchCocktail(e){
+        console.log('click');
         e.preventDefault();
         const res = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${cocktailName}`);
         const data = await res.json();
         console.log('les drinks: ', data.drinks);
         setCocktails(data.drinks);
 
-
-
-
     }
+
+    const allCocktails = cocktails.map(cocktail => (
+        <Cocktail key={cocktail.idDrink} cocktail={cocktail} />
+    ))
     return(
-        <Container>
+        <Container className="mt-5">
             <Row className="justify-content-center">
-                <Col>
-                    <Jumbotron>
+                
+                    <Jumbotron className="col-12 col-md-10">
                         <h1 className="text-center">Search Cocktails by Name</h1>
                         <Row>
                             <Col>
@@ -54,8 +58,14 @@ export default function Home(){
                                 </Form>
                             </Col>
                         </Row>
+                        <h1 className="text-center mt-5">Results: <span id="total"></span></h1>
+                        <Row className="mt-5">
+                            
+                                {allCocktails}
+                            
+                        </Row>
                     </Jumbotron>
-                </Col>
+                
             </Row>
             
 

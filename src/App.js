@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import "./Bootstrap.css";
 import './Custom.css';
@@ -9,40 +9,29 @@ import Alcoholic from "./pages/Alcoholic";
 import Category from "./pages/Category";
 import Ingredient from "./pages/Ingredient";
 import Home from "./pages/Home";
-import Favorites from './components/Favorites';
+import Favorites from './pages/Favorites';
+import { FavoriteContextProvider } from "./contexts/FavoritesContext";
 
-import {BrowserRouter as Browser, Switch, Route} from "react-router-dom";
-
-
-// import Button from "react-bootstrap/Button";
-// import Jumbotron from "react-bootstrap/Jumbotron";
-// import Form from "react-bootstrap/Form";
-// import FormControl from "react-bootstrap/FormControl";
-// import Repo from "./Repo";
-// import Container from "react-bootstrap/Container";
-// import ListGroup from "react-bootstrap/ListGroup";
-
+import { BrowserRouter as Browser, Switch, Route } from "react-router-dom";
 
 function App() {
-
    
   return (
-      <Browser>
-        
+    <FavoriteContextProvider>
+        <Browser>
             <div className="App">  
-            <Header /> 
-                <Switch>         
-                    <Route exact path="/" component={Home}/>
-                    <Route path="/ingredient" component={Ingredient}/>
-                    <Route path="/category" component={Category}/>
-                    <Route path="/alcoholic" component={Alcoholic}/>
-                    <Route path="/favorites" component={Favorites} />
-                </Switch>
-            <Footer />
+                <Header /> 
+                    <Switch>         
+                        <Route exact path="/" component={Home}/>
+                        <Route path="/ingredient" component={Ingredient}/>
+                        <Route path="/category" component={Category}/>
+                        <Route path="/alcoholic" component={Alcoholic}/>
+                        <Route path="/favorites" component={Favorites} />
+                    </Switch>
+                <Footer />
             </div>
-        
-      </Browser>
-    
+        </Browser>
+    </FavoriteContextProvider>
     
   );
 }
