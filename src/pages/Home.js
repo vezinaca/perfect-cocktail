@@ -42,7 +42,7 @@ export default function Home(){
             <Row className="justify-content-center">
                 
                     <Jumbotron className="col-12 col-md-10">
-                        <h1 className="text-center">Search Cocktails by Name</h1>
+                        <h3 className="text-center">Search Cocktails by Name</h3>
                         <Row>
                             <Col>
                                 <Form>
@@ -58,7 +58,7 @@ export default function Home(){
                                 </Form>
                             </Col>
                         </Row>
-                        <h1 className="text-center mt-5">Results: <span id="total"></span></h1>
+                        <h3 className="text-center mt-5">Results: <span id="total"></span></h3>
                         <Row className="mt-5">
                             
                                 {allCocktails}
