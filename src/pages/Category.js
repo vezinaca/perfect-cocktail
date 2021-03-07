@@ -40,7 +40,7 @@ export default function Home(){
         const res = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
         // Wait for response then return JSON
         const data = await res.json();
-        console.log(data.drinks);
+        //console.log("in getDrinksByCategory in Category.js: ", data.drinks);
         setDrinks(data.drinks)
         
    }
@@ -50,14 +50,14 @@ export default function Home(){
         const res = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
         // Wait for response and return JSON
         const data = await res.json();
-        console.log(data.drinks);
+        //console.log(data.drinks);
         setCategories(data.drinks);
    }
 
     function handleChange(e){
         e.preventDefault();
         
-        console.log('change option', e.target.value);
+        //console.log('change option', e.target.value);
         getDrinksByCategory(e.target.value);
         
     }

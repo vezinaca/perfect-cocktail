@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
@@ -15,54 +15,69 @@ export default function Drink({drink}){
     const [state, dispatch] = useContext(FavoriteContext);
     const [showModal, setShowModal] = useState(false);
     const [myDrink, setMyDrink] = useState({});
+    const [ingredients, setIngredients] = useState([])
 
     let allIngredients;
 
     function getIngredients(){
+        console.log('myDrink dans getIngredeints: ', myDrink[0]);
         let ingredients = [];
           for(let i = 1; i < 16; i++) {
                const ingredientMeasure = {};
-               if( drink[`strIngredient${i}`] !== null ) {
-                    ingredientMeasure.ingredient = drink[`strIngredient${i}`];
-                    ingredientMeasure.measure = drink[`strMeasure${i}`];
+               if( myDrink[0][`strIngredient${i}`] !== null ) {
+                    ingredientMeasure.ingredient = myDrink[0][`strIngredient${i}`];
+                    ingredientMeasure.measure = myDrink[0][`strMeasure${i}`];
                     ingredients.push(ingredientMeasure);
                }
           }
-          console.log(drink);
-          return ingredients;
+          console.log("current drink in getIngredients: ", myDrink);
+          console.log("ingredients in getIngredients: ", ingredients);
+          setIngredients(ingredients);
           
 
     }
 
     function addToFavorites(e){
         e.preventDefault();
-        console.log('added to fav');
+        //console.log('added to fav');
         dispatch({type: ACTIONS.ADD_TO_FAVORITES, payload: drink})
-        console.log(state.favorites);
+        //console.log(state.favorites);
     }
 
     const handleShow = () => {
         
-        console.log("les drinks by name ds handlwShow: " + getDrinksByName(drink.strDrink));
-        console.log("myDrink: ", myDrink);
-        allIngredients = getIngredients().map(ingredient => (
-            <ListGroupItem>{ingredient.ingredient} - {ingredient.measure}</ListGroupItem>
-        ))
+        //getDrinkById(drink.IdDrink);
+        console.log("myDrink dans handleShow: ", myDrink);
+        //const tousLesIngredients = getIngredients();
+        //console.log("tousLesIngredients: ", tousLesIngredients);
+        // allIngredients = tousLesIngredients.map(ingredient => (
+        //     <ListGroupItem>{ingredient.ingredient} - {ingredient.measure}</ListGroupItem>
+        // ))
+        console.log('tous les ListItems: ', allIngredients);
         setShowModal(true);
     }
     const handleClose = () => setShowModal(false);
 
-    async function getDrinksByName(drinkName) {
+    async function getDrinkById(drinkId) {
         // Search by name
-        const apiResponse = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${drinkName}`);
+        const apiResponse = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkId}`);
         // Returns a json respone
-        const cocktails = await apiResponse.json();
+        const cocktail = await apiResponse.json();
         
-        
-        const lesDrinks = cocktails.drinks;
-        setMyDrink(lesDrinks);
+        console.log("dans getDrinkById: ", cocktail.drinks);
+        setMyDrink(cocktail.drinks);
     }
 
+    useEffect(() => {
+        console.log('useEffect :', drink.IdDrink);
+        getDrinkById(drink.idDrink);
+        //getIngredients();
+
+    }, []);
+
+    allIngredients = ingredients.map(ingredient => (
+        <ListGroupItem>{ingredient.ingredient} - {ingredient.measure}</ListGroupItem>
+    ))
     
     return(
         <>
