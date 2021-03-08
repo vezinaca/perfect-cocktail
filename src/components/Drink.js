@@ -33,6 +33,10 @@ export default function Drink({drink}){
           console.log("current drink in getIngredients: ", myDrink);
           console.log("ingredients in getIngredients: ", ingredients);
           setIngredients(ingredients);
+
+        //   allIngredients = ingredients.map(ingredient => (
+        //     <ListGroupItem>{ingredient.ingredient} - {ingredient.measure}</ListGroupItem>
+        // ))
           
 
     }
@@ -46,38 +50,56 @@ export default function Drink({drink}){
 
     const handleShow = () => {
         
+        console.log("drink: ", drink);
+        console.log("drink.idDrink: ", drink.idDrink);
         //getDrinkById(drink.IdDrink);
         console.log("myDrink dans handleShow: ", myDrink);
+        getIngredients();
         //const tousLesIngredients = getIngredients();
         //console.log("tousLesIngredients: ", tousLesIngredients);
         // allIngredients = tousLesIngredients.map(ingredient => (
         //     <ListGroupItem>{ingredient.ingredient} - {ingredient.measure}</ListGroupItem>
         // ))
+        // for ( let i = 0; i < 5; i++){
+        //     allIngredients.push(<ListGroupItem>allo</ListGroupItem>);
+
+        // }
+        console.log('state ingredients: ', ingredients);
+        // allIngredients = ingredients.map(ingredient => (
+        //  <ListGroupItem>{ingredient.ingredient} - {ingredient.measure}</ListGroupItem>
+    // ))
+       
         console.log('tous les ListItems: ', allIngredients);
         setShowModal(true);
     }
     const handleClose = () => setShowModal(false);
 
     async function getDrinkById(drinkId) {
-        // Search by name
+        // Search by ID
+        //https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=15300
         const apiResponse = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkId}`);
         // Returns a json respone
         const cocktail = await apiResponse.json();
         
-        console.log("dans getDrinkById: ", cocktail.drinks);
+        //console.log("dans getDrinkById: ", cocktail.drinks);
         setMyDrink(cocktail.drinks);
     }
 
+    // function showIngredients(){
+    //     console.log("showIngredietns: ", ingredients);
+    // }
+
     useEffect(() => {
-        console.log('useEffect :', drink.IdDrink);
+        //console.log('useEffect :', drink.idDrink);
         getDrinkById(drink.idDrink);
         //getIngredients();
 
     }, []);
 
     allIngredients = ingredients.map(ingredient => (
-        <ListGroupItem>{ingredient.ingredient} - {ingredient.measure}</ListGroupItem>
+        <ListGroupItem key={ingredient.ingredient}>{ingredient.ingredient} - {ingredient.measure}</ListGroupItem>
     ))
+
     
     return(
         <>
@@ -105,13 +127,18 @@ export default function Drink({drink}){
                         <ListGroupItem variant="success">
                             Ingredients
                         </ListGroupItem>
-                            {allIngredients} 
+                        
+                            {allIngredients}
+                        
                     </ListGroup>
                 </Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
+                {/* <Button variant="secondary" onClick={showIngredients}>
+                    Show Ingredients
+                </Button> */}
                 
                 </Modal.Footer>
             </Modal>
