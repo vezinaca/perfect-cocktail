@@ -34,8 +34,8 @@ export default function Cocktail({cocktail}){
         console.log(state.favorites);
     }
 
-    const allIngredients = getIngredients().map(ingredient => (
-        <ListGroupItem>{ingredient.ingredient} - {ingredient.measure}</ListGroupItem>
+    const allIngredients = getIngredients().map((ingredient, index) => (
+        <ListGroupItem key={index}>{ingredient.ingredient} - {ingredient.measure}</ListGroupItem>
     ))
     
     return(

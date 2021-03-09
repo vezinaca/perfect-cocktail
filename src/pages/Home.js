@@ -14,22 +14,15 @@ import Label from "react-bootstrap/FormLabel";
 import FormControl from "react-bootstrap/FormControl";
 import Cocktail from "../components/Cocktail";
 
-
-// Search cocktail by name
-// https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita
-
-
 export default function Home(){
 
     const [cocktailName, setCocktailName] = useState([]);
     const [cocktails, setCocktails] = useState([]);
     
      async function fetchCocktail(e){
-        console.log('click');
         e.preventDefault();
         const res = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${cocktailName}`);
         const data = await res.json();
-        console.log('les drinks: ', data.drinks);
         setCocktails(data.drinks);
 
     }
@@ -58,7 +51,7 @@ export default function Home(){
                                 </Form>
                             </Col>
                         </Row>
-                        <h3 className="text-center mt-5">Results: <span id="total"></span></h3>
+                        {cocktails.length !== 0 ? <h3 className="text-center mt-5">Results: <span id="total"></span></h3> : null}
                         <Row className="mt-5">
                             
                                 {allCocktails}

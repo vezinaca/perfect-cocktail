@@ -14,33 +14,17 @@ import Label from "react-bootstrap/FormLabel";
 import FormControl from "react-bootstrap/FormControl";
 import Drink from "../components/Drink";
 
-
-// Search cocktail by name
-// https://www.thecocktaildb.com/api/json/v1/1/search.php?s=margarita
-
-
-export default function Home(){
+export default function Category(){
 
     const [drinks, setDrinks] = useState([]);
     const [categories, setCategories] = useState([]);
     
-    //  async function fetchCocktail(e){
-    //     console.log('click');
-    //     e.preventDefault();
-    //     const res = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${cocktailName}`);
-    //     const data = await res.json();
-    //     console.log('les drinks: ', data.drinks);
-    //     //setCocktails(data.drinks);
-
-    // }
-
     // Get Drinks By Category
     async function getDrinksByCategory( category ) {
         // Search by Category
         const res = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
         // Wait for response then return JSON
         const data = await res.json();
-        //console.log("in getDrinksByCategory in Category.js: ", data.drinks);
         setDrinks(data.drinks)
         
    }
@@ -56,10 +40,7 @@ export default function Home(){
 
     function handleChange(e){
         e.preventDefault();
-        
-        //console.log('change option', e.target.value);
         getDrinksByCategory(e.target.value);
-        
     }
 
     useEffect(() =>{
@@ -91,11 +72,10 @@ export default function Home(){
                                                 
                                            </Form.Control>
                                     </Form.Group>
-                                    {/* <Button variant="success" onClick={fetchCocktail}>Get cocktails</Button> */}
                                 </Form>
                             </Col>
                         </Row>
-                        <h3 className="text-center mt-5">Results: <span id="total"></span></h3>
+                        {drinks.length !== 0 ? <h3 className="text-center mt-5">Results: <span id="total"></span></h3> : null}
                         <Row className="mt-5">
                             
                                 {allDrinks}
