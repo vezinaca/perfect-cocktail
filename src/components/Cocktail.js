@@ -29,9 +29,7 @@ export default function Cocktail({cocktail}){
 
     function addToFavorites(e){
         e.preventDefault();
-        console.log('added to fav');
         dispatch({type: ACTIONS.ADD_TO_FAVORITES, payload: cocktail})
-        console.log(state.favorites);
     }
 
     const allIngredients = getIngredients().map((ingredient, index) => (
@@ -48,14 +46,12 @@ export default function Cocktail({cocktail}){
                         <Card.Title className="text-center">{cocktail.strDrink}</Card.Title>
                         <Card.Text className="font-weight-bold">Instructions</Card.Text>
                         <Card.Text>{cocktail.strInstructions}</Card.Text>
-                        <Card.Text>
                             <ListGroup>
                                 <ListGroupItem variant="danger">
                                     Ingredients
                                 </ListGroupItem>
                                 {allIngredients}
                             </ListGroup>
-                        </Card.Text>
                         <Card.Text className="font-weight-bold">Extra Information: </Card.Text>
                         <Card.Text>
                             <span className="badge badge-pill badge-success">{cocktail.strAlcoholic}</span>

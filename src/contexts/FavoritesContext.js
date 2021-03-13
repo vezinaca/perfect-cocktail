@@ -3,7 +3,10 @@ import { FavoritesReducer } from "../reducers/FavoritesReducer";
 
 export const FavoriteContext = createContext();
 
-const initialState = {favorites: [], done: false}
+//const initialState = {favorites: [], done: false}
+
+const storage = localStorage.getItem('favorites') ? JSON.parse(localStorage.getItem('favorites')) : [];
+const initialState = {favorites: storage, done: false}
 
 export function FavoriteContextProvider({children}){
 
