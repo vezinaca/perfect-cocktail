@@ -1,17 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import "../Boostrap.css";
 
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Jumbotron from "react-bootstrap/Jumbotron";
-import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
-import FormGroup from "react-bootstrap/FormGroup";
-import Label from "react-bootstrap/FormLabel";
-import FormControl from "react-bootstrap/FormControl";
 import Drink from "../components/Drink";
 
 export default function Category(){
@@ -26,7 +20,6 @@ export default function Category(){
         // Wait for response then return JSON
         const data = await res.json();
         setDrinks(data.drinks)
-        
    }
 
     // Retrieves all the Categories from the REST API
@@ -51,10 +44,8 @@ export default function Category(){
         <Drink key={drink.idDrink} drink={drink} />
     ))
     return(
-        
         <Container className="mt-5">
             <Row className="justify-content-center">
-                
                     <Jumbotron className="col-12 col-md-10">
                         <h3 className="text-center">Search Cocktails by Category</h3>
                         <Row>
@@ -81,12 +72,8 @@ export default function Category(){
                                 {allDrinks}
                             
                         </Row>
-                    </Jumbotron>
-                
+                    </Jumbotron>    
             </Row>
-            
-
         </Container>
-        
     )
 }

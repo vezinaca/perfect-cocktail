@@ -2,13 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 import { FavoriteContext } from "../contexts/FavoritesContext";
 import { ACTIONS } from "../reducers/FavoritesReducer";
-import Modal from "react-bootstrap/Modal";
-//import { getDrinksByName } from "../utilities/Utilities";
-
+import {getIngredients} from "../utilities/Utilities";
+import MyModal from "./MyModal";
 
 export default function Drink({drink}){
 
@@ -16,20 +14,6 @@ export default function Drink({drink}){
     const [showModal, setShowModal] = useState(false);
     const [myDrink, setMyDrink] = useState({});
     const [ingredients, setIngredients] = useState([])
-
-    function getIngredients(){
-        //console.log('myDrink dans getIngredeints: ', myDrink);
-        let ingredients = [];
-          for(let i = 1; i < 16; i++) {
-               const ingredientMeasure = {};
-               if( myDrink[`strIngredient${i}`] !== null ) {
-                    ingredientMeasure.ingredient = myDrink[`strIngredient${i}`];
-                    ingredientMeasure.measure = myDrink[`strMeasure${i}`];
-                    ingredients.push(ingredientMeasure);
-               }
-          }
-           setIngredients(ingredients);
-      }
 
     function addToFavorites(e){
         e.preventDefault();
@@ -39,7 +23,7 @@ export default function Drink({drink}){
     const handleShow = () => {
         
         //console.log("myDrink dans handleShow: ", myDrink);
-        getIngredients();
+        setIngredients(getIngredients(myDrink));
         setShowModal(true);
     }
 
@@ -77,27 +61,7 @@ export default function Drink({drink}){
                     </Card.Body>
                 </Card>
             </Col>
-            <Modal show={showModal} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>{drink.strDrink}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <ListGroup>
-                        <ListGroupItem variant="success">Preparation</ListGroupItem>
-                        <ListGroupItem >{myDrink.strInstructions}</ListGroupItem>
-                        <ListGroupItem variant="success">Ingredients </ListGroupItem>
-                        
-                            {allIngredients}
-                        
-                    </ListGroup>
-                </Modal.Body>
-                <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                
-                </Modal.Footer>
-            </Modal>
+            <MyModal showModal={showModal} handleClose={handleClose} beverage={myDrink} allIngredients={allIngredients} />
         </>
     )
 }
