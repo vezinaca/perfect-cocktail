@@ -26,8 +26,8 @@ thead {
     border-radius: 50%;
     font-size: 22px;
     padding-left: 10px;
+    padding-top: -10px;
     color: #29ABE0;
-    text-align: center;
 }
 
 .is-favorite {

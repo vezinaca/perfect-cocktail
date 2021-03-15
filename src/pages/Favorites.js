@@ -33,7 +33,8 @@ export default function Favorites(){
         setShowModal(true);
     }
 
-    function handleRemove(e){        
+    function handleRemove(e){   
+        console.log('e.target.value dans favs page: ', e.target.value);     
         dispatch({type: ACTIONS.REMOVE_FROM_FAVORITES, payload: e.target.value})
     }
 
