@@ -20,20 +20,29 @@ thead {
     position: absolute;
     right: -18px;
     top: 18px;
-    background-color: white;
     width: 35px!important;
     height: 35px;
     border-radius: 50%;
-    font-size: 22px;
+    font-size: 16px;
     padding-left: 10px;
     padding-top: -10px;
+    background-color: white;
     color: #29ABE0;
+    /* background-color: purple;
+    color: yellow; */
 }
 
 .is-favorite {
     background-color:#29ABE0!important;
     color: white!important;
+    /* background-color:yellow;
+    color: purple; */
 }
+
+/* .card .favorite-btn:focus {
+    outline: none;
+    box-shadow: none;
+} */
 
 
 h1 {

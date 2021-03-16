@@ -15,9 +15,14 @@ export default function Drink({drink}){
     const [myDrink, setMyDrink] = useState({});
     const [ingredients, setIngredients] = useState([])
 
-    function addToFavorites(e){
+    function handleFavorites(e){
         e.preventDefault();
-        dispatch({type: ACTIONS.ADD_TO_FAVORITES, payload: drink})
+        if (!isFavorite){
+            dispatch({type: ACTIONS.ADD_TO_FAVORITES, payload: drink})
+        } else {
+            dispatch({type: ACTIONS.REMOVE_FROM_FAVORITES, payload: drink.idDrink})
+        }
+        
     }
 
     const handleShow = () => {
@@ -43,12 +48,19 @@ export default function Drink({drink}){
     const allIngredients = ingredients.map(ingredient => (
         <ListGroupItem key={ingredient.ingredient}>{ingredient.ingredient} - {ingredient.measure}</ListGroupItem>
     ))
+    
+    let isFavorite = (state.favorites.findIndex(item => item.idDrink === drink.idDrink) !== -1);
+
+    let btnFavText = isFavorite ? '-' : '+';
+    let classNotFav = 'favorite-btn btn btn-outline-info';
+    let classFav = 'favorite-btn btn btn-outline-info is-favorite';
 
     return(
         <>
             <Col md="6" >
                 <Card className="my-3 mx-auto" style={{ width: '22rem' }}>
-                    <Button onClick={addToFavorites} className="favorite-btn btn btn-outline-info">+</Button>
+                    {/* <Button onClick={handleFavorites} className={isFavorite ? classNotFav : classFav}>{btnFavText}</Button> */}
+                    <button onClick={handleFavorites} className={isFavorite ? classFav : classNotFav}>{btnFavText}</button>
                     <Card.Img variant="top" src={drink.strDrinkThumb} width="10px"/>
                     <Card.Body>
                         <Card.Title className="text-center">{drink.strDrink}</Card.Title>

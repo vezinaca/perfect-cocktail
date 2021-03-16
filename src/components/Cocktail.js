@@ -15,10 +15,8 @@ export default function Cocktail({cocktail}){
     function handleFavorites(e){
         e.preventDefault();
         if (!isFavorite){
-            console.log('add to fav')
             dispatch({type: ACTIONS.ADD_TO_FAVORITES, payload: cocktail})
         } else {
-            console.log('remove from fav')
             dispatch({type: ACTIONS.REMOVE_FROM_FAVORITES, payload: cocktail.idDrink})
         }
         
@@ -30,26 +28,29 @@ export default function Cocktail({cocktail}){
     
     //state.cartItems[state.cartItems.findIndex(item => item.idDrink === action.payload)].quantity
     let isFavorite = (state.favorites.findIndex(item => item.idDrink === cocktail.idDrink) !== -1);
-    console.log("isFavorite: ", isFavorite);
+    //console.log("isFavorite: ", isFavorite);
     
-    let btnFavText = '';
-    let allClasses = '';
+    // let btnFavText = '';
+    
 
-    if (isFavorite){
-        btnFavText = '-';
-        allClasses = 'favorite-btn btn btn-outline-info';
+    // if (isFavorite){
+    //     btnFavText = '-';
+        
+    // }
+    // else
+    //     btnFavText = '+';
+        
+    let btnFavText = isFavorite ? '-' : '+';
 
-    }
-    else
-        btnFavText = '+';
-        allClasses = 'favorite-btn btn btn-outline-info is-favorite';
-
+    let classNotFav = 'favorite-btn btn btn-outline-info';
+    let classFav = 'favorite-btn btn btn-outline-info is-favorite';
 
     return(
         <>
             <Col md="6" >
                 <Card className="my-3 mx-auto" style={{width: '22rem'}} >
-                    <Button onClick={handleFavorites} className={allClasses}>{btnFavText}</Button>
+                    {/* <Button onClick={handleFavorites} className={isFavorite ? classNotFav : classFav}>{btnFavText}</Button> */}
+                    <button onClick={handleFavorites} className={isFavorite ? classFav : classNotFav}>{btnFavText}</button>
                     <Card.Img variant="top" src={cocktail.strDrinkThumb} />
                     <Card.Body>
                         <Card.Title className="text-center">{cocktail.strDrink}</Card.Title>
